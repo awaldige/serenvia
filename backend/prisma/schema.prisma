@@ -1,0 +1,229 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum TipoUsuario {
+  PACIENTE
+  PSICOLOGO
+  ADMIN
+}
+
+enum StatusPsicologo {
+  RASCUNHO
+  PENDENTE
+  APROVADO
+  REJEITADO
+  SUSPENSO
+}
+
+enum StatusAgendamento {
+  PENDENTE
+  CONFIRMADO
+  CANCELADO
+  CONCLUIDO
+}
+
+// ==========================================
+// USUÁRIOS
+// ==========================================
+
+model Usuario {
+  id           String      @id @default(uuid())
+  nome         String
+  email        String      @unique
+  senhaHash    String
+  tipo         TipoUsuario @default(PACIENTE)
+  ativo        Boolean     @default(true)
+  criadoEm     DateTime    @default(now())
+  atualizadoEm DateTime    @updatedAt
+
+  perfilPsicologo PerfilPsicologo?
+
+  auditoriasRealizadas AuditoriaPsicologo[] @relation("AdministradorAuditoria")
+
+  agendamentosPaciente Agendamento[] @relation("PacienteAgendamentos")
+
+  @@map("usuarios")
+}
+
+// ==========================================
+// PERFIL DO PSICÓLOGO
+// ==========================================
+
+model PerfilPsicologo {
+  id String @id @default(uuid())
+
+  usuarioId String  @unique
+  usuario   Usuario @relation(fields: [usuarioId], references: [id], onDelete: Restrict)
+
+  crpNumero String
+  crpUf     String @db.VarChar(2)
+
+  telefone      String
+  biografia     String? @db.Text
+  especialidade String? @db.VarChar(200)
+
+  valorConsulta Decimal @db.Decimal(10, 2)
+
+  status StatusPsicologo @default(PENDENTE)
+
+  criadoEm     DateTime  @default(now())
+  atualizadoEm DateTime  @updatedAt
+  aprovadoEm   DateTime?
+
+  endereco EnderecoPsicologo?
+
+  auditorias AuditoriaPsicologo[]
+
+  disponibilidades DisponibilidadePsicologo[]
+  bloqueios        BloqueioAgenda[]
+  agendamentos     Agendamento[]
+
+  @@unique([crpNumero, crpUf])
+  @@index([status])
+  @@map("perfis_psicologos")
+}
+
+// ==========================================
+// ENDEREÇO PROFISSIONAL
+// ==========================================
+
+model EnderecoPsicologo {
+  id String @id @default(uuid())
+
+  perfilPsicologoId String @unique
+
+  perfilPsicologo PerfilPsicologo @relation(fields: [perfilPsicologoId], references: [id], onDelete: Cascade)
+
+  cep         String  @db.VarChar(8)
+  logradouro  String
+  numero      String
+  complemento String?
+  bairro      String
+  cidade      String
+  uf          String  @db.VarChar(2)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@map("enderecos_psicologos")
+}
+
+// ==========================================
+// AUDITORIA ADMINISTRATIVA
+// ==========================================
+
+model AuditoriaPsicologo {
+  id String @id @default(uuid())
+
+  perfilPsicologoId String
+
+  perfilPsicologo PerfilPsicologo @relation(fields: [perfilPsicologoId], references: [id], onDelete: Restrict)
+
+  administradorId String
+
+  administrador Usuario @relation("AdministradorAuditoria", fields: [administradorId], references: [id], onDelete: Restrict)
+
+  statusAnterior StatusPsicologo
+  statusNovo     StatusPsicologo
+
+  justificativa String @db.Text
+
+  criadoEm DateTime @default(now())
+
+  @@index([perfilPsicologoId, criadoEm])
+  @@index([administradorId])
+  @@map("auditoria_psicologos")
+}
+
+// ==========================================
+// DISPONIBILIDADE SEMANAL
+// ==========================================
+
+model DisponibilidadePsicologo {
+  id String @id @default(uuid())
+
+  perfilPsicologoId String
+
+  perfilPsicologo PerfilPsicologo @relation(fields: [perfilPsicologoId], references: [id], onDelete: Cascade)
+
+  diaSemana Int
+
+  inicioMinutos Int
+  fimMinutos    Int
+
+  ativo Boolean @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@unique([perfilPsicologoId, diaSemana, inicioMinutos, fimMinutos])
+  @@index([perfilPsicologoId, diaSemana])
+  @@map("disponibilidades_psicologos")
+}
+
+// ==========================================
+// BLOQUEIOS DE AGENDA
+// ==========================================
+
+model BloqueioAgenda {
+  id String @id @default(uuid())
+
+  perfilPsicologoId String
+
+  perfilPsicologo PerfilPsicologo @relation(fields: [perfilPsicologoId], references: [id], onDelete: Cascade)
+
+  inicio DateTime
+  fim    DateTime
+
+  motivo String? @db.VarChar(250)
+
+  criadoEm DateTime @default(now())
+
+  @@index([perfilPsicologoId, inicio, fim])
+  @@map("bloqueios_agenda")
+}
+
+// ==========================================
+// AGENDAMENTOS DEMONSTRATIVOS
+// ==========================================
+
+model Agendamento {
+  id String @id @default(uuid())
+
+  pacienteId String
+
+  paciente Usuario @relation("PacienteAgendamentos", fields: [pacienteId], references: [id], onDelete: Restrict)
+
+  perfilPsicologoId String
+
+  perfilPsicologo PerfilPsicologo @relation(fields: [perfilPsicologoId], references: [id], onDelete: Restrict)
+
+  inicio DateTime
+  fim    DateTime
+
+  status StatusAgendamento @default(PENDENTE)
+
+  observacao String? @db.VarChar(500)
+
+  confirmadoEm DateTime?
+  canceladoEm  DateTime?
+  concluidoEm  DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@index([pacienteId, inicio])
+  @@index([perfilPsicologoId, inicio])
+  @@index([status, inicio])
+  @@map("agendamentos")
+}
