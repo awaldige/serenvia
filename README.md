@@ -127,7 +127,11 @@ Os horários disponíveis são atualizados conforme os agendamentos realizados, 
 
 ## 📸 Demonstração
 
-Imagens das telas da plataforma serão adicionadas em breve.
+### 🏠 Página Inicial
+
+![Página inicial da plataforma SERENVIA](docs/screenshots/serenvia-home.png)
+
+*Interface inicial do SERENVIA — plataforma demonstrativa desenvolvida pela AW TECHNOLOGY.*
 
 ---
 
