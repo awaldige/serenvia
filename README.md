@@ -2,13 +2,13 @@
 
 ### Plataforma Demonstrativa de Agendamento Psicológico
 
-**Projeto desenvolvido por AW TECHNOLOGY**
+**Desenvolvido por AW TECHNOLOGY**
 
-O SERENVIA é uma plataforma web demonstrativa desenvolvida para simular o gerenciamento de consultas psicológicas online.
+O **SERENVIA** é uma plataforma web demonstrativa que simula o gerenciamento de consultas psicológicas, reunindo funcionalidades para pacientes, psicólogos e administradores em ambientes específicos para cada perfil.
 
-O sistema oferece ambientes específicos para pacientes, psicólogos e administradores, permitindo organizar agendamentos, acompanhar consultas e gerenciar cadastros profissionais.
+O projeto foi desenvolvido para demonstrar conhecimentos em desenvolvimento full stack, autenticação, controle de acesso, gerenciamento de usuários e organização de agendamentos com integração a banco de dados.
 
-> **Aviso:** este é um projeto demonstrativo, desenvolvido para fins de estudo e portfólio. Todos os usuários e atendimentos utilizados na demonstração são fictícios. A plataforma não oferece atendimento psicológico real.
+> **⚠️ Aviso importante:** o SERENVIA é um projeto demonstrativo para fins de estudo e portfólio. Os usuários e atendimentos utilizados nas demonstrações são fictícios. A plataforma não oferece atendimento psicológico real e não está preparada para processar dados clínicos ou atender pacientes reais.
 
 ---
 
@@ -16,32 +16,34 @@ O sistema oferece ambientes específicos para pacientes, psicólogos e administr
 
 ### 👤 Área do Paciente
 
-- Cadastro e autenticação.
+- Cadastro de pacientes e autenticação.
 - Visualização de psicólogos disponíveis.
-- Agendamento de consultas.
 - Consulta de horários disponíveis.
-- Reagendamento.
-- Cancelamento.
-- Acompanhamento do status das consultas.
-- Histórico de atendimentos.
+- Agendamento de consultas.
+- Reagendamento de agendamentos.
+- Cancelamento de consultas.
+- Acompanhamento dos agendamentos e respectivos status.
 
 ### 🧑‍⚕️ Área do Psicólogo
 
 - Cadastro profissional.
-- Gerenciamento do perfil.
-- Configuração de disponibilidade.
-- Visualização de agendamentos.
+- Visualização e atualização do perfil profissional.
+- Configuração e gerenciamento de disponibilidades.
+- Consulta dos próprios agendamentos.
 - Confirmação de consultas.
 - Cancelamento de consultas.
 - Registro de conclusão de atendimentos.
-- Histórico de consultas.
 
 ### 🛡️ Área Administrativa
 
 - Acesso administrativo.
-- Visualização de cadastros profissionais.
-- Análise e aprovação de psicólogos.
-- Acompanhamento de registros de auditoria.
+- Consulta de psicólogos cadastrados.
+- Visualização de cadastros pendentes de análise.
+- Análise de informações profissionais.
+- Aprovação ou rejeição de cadastros.
+- Gerenciamento do status dos psicólogos.
+- Reabertura de análises.
+- Consulta de registros de auditoria.
 
 ---
 
@@ -49,27 +51,27 @@ O sistema oferece ambientes específicos para pacientes, psicólogos e administr
 
 ### Frontend
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
+- **Next.js** — estrutura da aplicação web.
+- **React** — construção das interfaces.
+- **TypeScript** — tipagem estática.
+- **Tailwind CSS** — estilização da interface.
 
 ### Backend
 
-- Node.js
-- Express
-- TypeScript
-- Prisma ORM
+- **Node.js** — ambiente de execução.
+- **Express** — construção da API.
+- **TypeScript** — desenvolvimento tipado.
+- **Prisma ORM** — acesso e gerenciamento dos dados.
 
 ### Banco de Dados
 
-- PostgreSQL
-- Neon
+- **PostgreSQL** — banco de dados relacional.
+- **Neon** — serviço de banco de dados PostgreSQL em nuvem.
 
-### Controle de Versão
+### Ferramentas
 
-- Git
-- GitHub
+- **Git** — controle de versão.
+- **GitHub** — hospedagem do código-fonte.
 
 ---
 
@@ -83,6 +85,11 @@ serenvia/
 │   ├── src/
 │   │   ├── lib/
 │   │   ├── routes/
+│   │   │   ├── admin.ts
+│   │   │   ├── agenda.ts
+│   │   │   ├── auth.ts
+│   │   │   ├── pacientes.ts
+│   │   │   └── psicologos.ts
 │   │   └── server.ts
 │   └── package.json
 │
@@ -92,10 +99,21 @@ serenvia/
 │   │   └── app/
 │   │       ├── admin/
 │   │       ├── cadastro/
+│   │       ├── cadastro-psicologo/
 │   │       ├── login/
 │   │       ├── paciente/
-│   │       └── psicologo/
+│   │       ├── psicologo/
+│   │       └── psicologos/
 │   └── package.json
+│
+├── docs/
+│   └── screenshots/
+│       ├── serenvia-home.png
+│       ├── serenvia-login.png
+│       ├── serenvia-cadastro.png
+│       ├── serenvia-painel-paciente.png
+│       ├── serenvia-painel-psicologo.png
+│       └── serenvia-painel-admin.png
 │
 └── README.md
 ```
@@ -104,73 +122,82 @@ serenvia/
 
 ## 🔐 Autenticação e Controle de Acesso
 
-O sistema utiliza autenticação baseada em JWT e separação de permissões por perfil de usuário.
+O backend utiliza autenticação baseada em **JWT (JSON Web Token)** e organiza o acesso conforme os perfis de usuário.
 
-Os ambientes são organizados conforme as responsabilidades de pacientes, psicólogos e administradores.
+A estrutura contempla ambientes específicos para pacientes, psicólogos e administradores, com operações próprias para cada área.
 
-**Observação:** os mecanismos implementados são demonstrativos e não representam certificação de segurança para utilização em ambiente clínico real.
-
----
-
-## 📅 Gerenciamento de Consultas
-
-O sistema permite acompanhar diferentes situações dos agendamentos:
-
-- Pendente
-- Confirmado
-- Cancelado
-- Concluído
-
-Os horários disponíveis são atualizados conforme os agendamentos realizados, cancelados ou reagendados.
+> **Nota de segurança:** a implementação tem finalidade demonstrativa. O projeto não possui certificação de segurança para uso clínico e não deve ser utilizado para armazenar dados reais de pacientes sem uma avaliação técnica, jurídica e de privacidade apropriada.
 
 ---
 
-## 📸 Demonstração
+## 📅 Gerenciamento de Agendamentos
+
+O módulo de agenda contempla operações para:
+
+- Consultar disponibilidades.
+- Cadastrar e remover horários disponíveis.
+- Consultar horários para agendamento.
+- Criar agendamentos.
+- Consultar agendamentos do paciente.
+- Consultar agendamentos do psicólogo.
+- Confirmar consultas.
+- Cancelar consultas pelo paciente ou psicólogo.
+- Reagendar consultas.
+- Registrar a conclusão de atendimentos.
+
+Os agendamentos são acompanhados por status, incluindo **Pendente**, **Confirmado**, **Cancelado** e **Concluído**, conforme o fluxo demonstrativo da aplicação.
+
+---
+
+## 📸 Demonstração da Plataforma
 
 ### 🏠 Página Inicial
 
 ![Página inicial da plataforma SERENVIA](docs/screenshots/serenvia-home.png)
 
-*Interface inicial do SERENVIA — plataforma demonstrativa desenvolvida pela AW TECHNOLOGY.*
+*Página inicial do SERENVIA, apresentando a proposta visual da plataforma.*
 
 ### 🔐 Tela de Login
 
 ![Tela de login da plataforma SERENVIA](docs/screenshots/serenvia-login.png)
 
-*Interface de autenticação do SERENVIA, com acesso à plataforma.*
+*Interface de autenticação para acesso à plataforma.*
 
 ### 📝 Tela de Cadastro
 
 ![Tela de cadastro da plataforma SERENVIA](docs/screenshots/serenvia-cadastro.png)
 
-*Interface de cadastro do SERENVIA, para criação de conta na plataforma.*
+*Interface para criação de uma conta de usuário.*
 
 ### 👤 Painel do Paciente
 
 ![Painel do paciente da plataforma SERENVIA](docs/screenshots/serenvia-painel-paciente.png)
 
-*Painel do paciente do SERENVIA, com acesso aos recursos da plataforma.*
+*Área do paciente para acesso aos recursos de agendamento.*
 
 ### 🩺 Painel do Psicólogo
 
 ![Painel do psicólogo da plataforma SERENVIA](docs/screenshots/serenvia-painel-psicologo.png)
 
-*Painel do psicólogo do SERENVIA, com acesso aos recursos de gestão profissional da plataforma.*
+*Área profissional para gerenciamento de perfil, disponibilidade e consultas.*
 
 ### ⚙️ Painel Administrativo
 
 ![Painel administrativo da plataforma SERENVIA](docs/screenshots/serenvia-painel-admin.png)
 
-*Painel administrativo do SERENVIA, com recursos de gestão e acompanhamento da plataforma.*
+*Área administrativa para análise e gerenciamento de cadastros profissionais.*
+
 ---
 
 ## 📌 Status do Projeto
 
 **Versão demonstrativa funcional — em desenvolvimento.**
 
-Funcionalidades adicionais e melhorias de interface poderão ser implementadas futuramente.
+O SERENVIA reúne funcionalidades demonstrativas de autenticação, gerenciamento de perfis profissionais e agendamentos.
 
-O SERENVIA não está preparado para utilização com pacientes reais ou processamento de dados clínicos.
+O projeto poderá receber novas funcionalidades, melhorias de interface e aprimoramentos técnicos.
+
+**Importante:** a plataforma não está preparada para utilização com pacientes reais, processamento de pagamentos reais ou armazenamento de dados clínicos.
 
 ---
 
@@ -178,14 +205,27 @@ O SERENVIA não está preparado para utilização com pacientes reais ou process
 
 **AW TECHNOLOGY**
 
-Desenvolvimento de sistemas web, plataformas personalizadas e soluções digitais.
+Soluções inteligentes em software para negócios, desenvolvimento de sistemas web e plataformas personalizadas.
 
 **Desenvolvedor:** André Waldige
 
-**GitHub:** awaldige
+**GitHub:** [@awaldige](https://github.com/awaldige)
 
 ---
 
-## 📄 Finalidade
+## 🎯 Objetivo do Projeto
 
-Este projeto integra o portfólio técnico da AW TECHNOLOGY e demonstra conhecimentos em desenvolvimento full stack, autenticação, gerenciamento de usuários, agendamento e integração com banco de dados.
+O SERENVIA integra o portfólio técnico da AW TECHNOLOGY e demonstra a aplicação prática de conhecimentos em:
+
+- Desenvolvimento full stack.
+- Construção de interfaces web.
+- Desenvolvimento de APIs REST.
+- Autenticação e controle de acesso.
+- Gerenciamento de usuários e perfis.
+- Agendamento e gerenciamento de horários.
+- Integração com banco de dados relacional.
+- Organização de código e controle de versão.
+
+---
+
+**SERENVIA — Projeto demonstrativo desenvolvido por AW TECHNOLOGY.**
