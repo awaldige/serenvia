@@ -133,6 +133,12 @@ Os horários disponíveis são atualizados conforme os agendamentos realizados, 
 
 *Interface inicial do SERENVIA — plataforma demonstrativa desenvolvida pela AW TECHNOLOGY.*
 
+### 🔐 Tela de Login
+
+![Tela de login da plataforma SERENVIA](docs/screenshots/serenvia-login.png)
+
+*Interface de autenticação do SERENVIA, com acesso à plataforma.*
+
 ---
 
 ## 📌 Status do Projeto
