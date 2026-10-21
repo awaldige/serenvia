@@ -151,6 +151,13 @@ Os horários disponíveis são atualizados conforme os agendamentos realizados, 
 
 *Painel do paciente do SERENVIA, com acesso aos recursos da plataforma.*
 
+### 🩺 Painel do Psicólogo
+
+![Painel do psicólogo da plataforma SERENVIA](docs/screenshots/serenvia-painel-psicologo.png)
+
+*Painel do psicólogo do SERENVIA, com acesso aos recursos de gestão profissional da plataforma.*
+
+
 ---
 
 ## 📌 Status do Projeto
