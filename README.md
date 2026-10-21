@@ -145,6 +145,12 @@ Os horários disponíveis são atualizados conforme os agendamentos realizados, 
 
 *Interface de cadastro do SERENVIA, para criação de conta na plataforma.*
 
+### 👤 Painel do Paciente
+
+![Painel do paciente da plataforma SERENVIA](docs/screenshots/serenvia-painel-paciente.png)
+
+*Painel do paciente do SERENVIA, com acesso aos recursos da plataforma.*
+
 ---
 
 ## 📌 Status do Projeto
