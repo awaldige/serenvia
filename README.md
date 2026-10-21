@@ -139,6 +139,12 @@ Os horários disponíveis são atualizados conforme os agendamentos realizados, 
 
 *Interface de autenticação do SERENVIA, com acesso à plataforma.*
 
+### 📝 Tela de Cadastro
+
+![Tela de cadastro da plataforma SERENVIA](docs/screenshots/serenvia-cadastro.png)
+
+*Interface de cadastro do SERENVIA, para criação de conta na plataforma.*
+
 ---
 
 ## 📌 Status do Projeto
