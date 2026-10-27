@@ -3,8 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = "";
 
 // ==========================================
 // TIPOS

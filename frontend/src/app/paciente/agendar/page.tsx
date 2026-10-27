@@ -8,8 +8,7 @@ import { useRouter } from "next/navigation";
 // CONFIGURAÇÕES
 // ==========================================
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = "";
 
 const FUSO_HORARIO = "America/Sao_Paulo";
 

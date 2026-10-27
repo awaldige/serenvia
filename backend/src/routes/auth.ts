@@ -28,7 +28,7 @@ const COOKIE_MAX_AGE = 2 * 60 * 60 * 1000;
 
 const COOKIE_SECURE = true;
 
-const COOKIE_SAME_SITE = "none" as const;
+const COOKIE_SAME_SITE = "lax" as const;
 // ==========================================
 // LOGIN DE USUÁRIOS
 // POST /api/auth/login
